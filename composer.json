@@ -1,0 +1,34 @@
+{
+    "name": "airlst/core-sdk",
+    "description": "This package is a SDK for handling actions on AirLST Core (e.g. Webhooks, API Calls, ...)",
+    "type": "library",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Michael Thaller",
+            "email": "m.thaller@airlst.com"
+        },
+        {
+            "name": "Orkhan Ahmadov",
+            "email": "o.ahmadov@airlst.com"
+        }
+    ],
+    "require": {
+        "ext-json": "*",
+        "php": "^7.4|8.0",
+        "laravel/framework": "^8.12",
+        "guzzlehttp/guzzle": "^7.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "AirLST\\CoreSdk\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "AirLST\\CoreSdk\\ServiceProvider"
+            ]
+        }
+    }
+}

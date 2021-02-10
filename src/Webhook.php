@@ -2,6 +2,7 @@
 
 namespace AirLST\CoreSdk;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
 /**
@@ -14,17 +15,17 @@ use Illuminate\Support\Arr;
 class Webhook
 {
     /**
-     * @var array
+     * @var Request
      */
-    private $requestBody;
+    private Request $request;
 
     /**
      * Webhook constructor.
-     * @param  array  $requestBody
+     * @param  Request  $request
      */
-    public function __construct(array $requestBody)
+    public function __construct(Request $request)
     {
-        $this->requestBody = $requestBody;
+        $this->request = $request;
     }
 
     /**
@@ -32,49 +33,34 @@ class Webhook
      */
     public function validate(): bool
     {
-        $requestHash = Arr::get($this->requestBody, 'secret');
+        $requestSignature = $this->request->header('x-airlst-webhook-signature');
 
-        if (!$requestHash) {
+        if (!$requestSignature) {
             return false;
         }
 
-        $signInformation = Arr::only($this->requestBody, ['try', 'event']);
-
-        $newHash = crypt(
-            json_encode($this->sortDataForHashing($signInformation)),
+        $mySignature = hash_hmac(
+            'sha256',
+            $this->request->getContent(),
             config('airlst-sdk.webhooks.secret')
         );
 
-        return hash_equals($requestHash, $newHash);
+        return $requestSignature === $mySignature;
     }
 
     /**
-     * @param  array  $dataToSort
      * @return array
      */
-    private function sortDataForHashing(array $dataToSort): array
+    public function getEventInformation(): array
     {
-        ksort($dataToSort);
-        foreach ($dataToSort as $key => $value) {
-            if (is_array($value)) {
-                $dataToSort[$key] = $this->sortDataForHashing($value);
-            }
-        }
-
-        return $dataToSort;
+        return (array) Arr::get($this->request->get('event'), 'event', []);
     }
 
     /**
      * @return array
      */
-    public function getEventInformation():array {
-        return (array) Arr::get($this->requestBody, 'event', []);
-    }
-
-    /**
-     * @return array
-     */
-    public function getRequestBody():array {
-        return $this->requestBody;
+    public function getRequestBody(): array
+    {
+        return $this->request->all();
     }
 }

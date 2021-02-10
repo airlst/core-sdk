@@ -39,7 +39,7 @@ trait HasFastPipeTrait
             return null;
         };
 
-        return $this->extractDataFromLastResponse();
+        return $this->extractDataFromLastResponse(true);
     }
 
     /**
@@ -68,7 +68,7 @@ trait HasFastPipeTrait
             return null;
         };
 
-        return $this->extractDataFromLastResponse();
+        return $this->extractDataFromLastResponse(true);
     }
 
 }

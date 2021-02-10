@@ -160,15 +160,22 @@ abstract class ApiWorker
     }
 
     /**
-     * @return mixed
+     * @param  bool  $returnFullResponse
+     * @return array|null
      */
-    protected function extractDataFromLastResponse()
+    protected function extractDataFromLastResponse(bool $returnFullResponse = false)
     {
         $content = $this->lastResponse->getBody()->getContents();
 
         switch (Arr::first($this->lastResponse->getHeader('Content-Type'))) {
             case 'application/json':
-                return Arr::get(json_decode($content, true), 'data', null);
+                $responseData = json_decode($content, true);
+
+                if (!$returnFullResponse) {
+                    $responseData = Arr::get($responseData, 'data', null);
+                }
+
+                return $responseData;
             default:
                 return $content;
         }

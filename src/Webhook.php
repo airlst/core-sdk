@@ -53,7 +53,7 @@ class Webhook
      */
     public function getEventInformation(): array
     {
-        return (array) Arr::get($this->request->get('event'), 'event', []);
+        return (array) $this->request->get('event');
     }
 
     /**

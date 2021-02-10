@@ -98,7 +98,7 @@ abstract class ApiWorker
             'headers' => $this->prepareRequestHeaders($extendedHeaders)
         ];
 
-        if ($method !== 'GET') {
+        if ($method === 'GET') {
             $requestOptions['query'] = $parameters;
         } else {
             $requestOptions['json'] = $parameters;

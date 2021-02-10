@@ -18,23 +18,25 @@ trait HasFastPipeTrait
      * @param  array  $filters
      * @param  array  $sort
      * @param  array  $pagination
+     * @param  array  $extendedRootData
      * @return array|null
      */
     public function getFpList(
         array $fields = ['id'],
         array $filters = [],
         array $sort = ['id' => 'asc'],
-        array $pagination = ['perPage' => 25, 'page' => 1]
+        array $pagination = ['perPage' => 25, 'page' => 1],
+        array $extendedRootData = []
     ): ?array {
         if (!$this->doRequest(
             $this->getEntityFastPipePath(),
             'POST',
-            [
+            array_merge([
                 'fields' => $fields,
                 'filters' => $filters,
                 'sort' => $sort,
                 'pagination' => $pagination
-            ]
+            ], $extendedRootData)
         )) {
             return null;
         };

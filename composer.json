@@ -24,6 +24,7 @@
             "AirLST\\CoreSdk\\": "src/"
         }
     },
+    "license": "MIT",
     "extra": {
         "laravel": {
             "providers": [

@@ -20,6 +20,22 @@ class RsvpWorker extends ApiWorker
     protected ?int $guestlistId = null;
 
     /**
+     * @param $code
+     * @return array|null
+     * @throws \Throwable
+     */
+    public function findByCode($code): ?array
+    {
+        return $this->doRequest(
+            'guestlists/'.$this->guestlistId.'/find-rsvp-by-code',
+            'GET',
+            [
+                'code' => $code
+            ]
+        ) ? $this->extractDataFromLastResponse() : null;
+    }
+
+    /**
      * @return string
      */
     protected function getEntityPrefix(): string

@@ -2,8 +2,10 @@
 
 namespace AirLST\CoreSdk\Facades;
 
+use AirLST\CoreSdk\Api\Workers\BbbRoomWorker;
 use AirLST\CoreSdk\Api\Workers\ContactWorker;
 use AirLST\CoreSdk\Api\Workers\GuestlistWorker;
+use AirLST\CoreSdk\Api\Workers\ProfileWorker;
 use AirLST\CoreSdk\Api\Workers\RsvpWorker;
 use Illuminate\Support\Facades\Facade;
 
@@ -17,6 +19,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static GuestlistWorker guestlist()
  * @method static RsvpWorker rsvp()
  * @method static ContactWorker contact()
+ * @method static BbbRoomWorker bbbRooms()
+ * @method static ProfileWorker profile()
  */
 class AirLSTCoreApi extends Facade
 {
@@ -25,5 +29,8 @@ class AirLSTCoreApi extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor() { return 'airlst.core-api'; }
+    protected static function getFacadeAccessor()
+    {
+        return 'airlst.core-api';
+    }
 }

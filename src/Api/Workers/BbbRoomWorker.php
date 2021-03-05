@@ -53,6 +53,30 @@ class BbbRoomWorker extends ApiWorker
     }
 
     /**
+     * @param  int  $roomId
+     * @param  int  $rsvpId
+     * @param  array  $extraBbbParameters
+     * @return array|null
+     * @throws \Throwable
+     */
+    public function getRoomJoinUrlForRsvp(int $roomId, int $rsvpId, array $extraBbbParameters = []): ?array
+    {
+        $curGuestlistId = $this->getGuestlistId();
+        $this->setGuestlistId(null);
+        $this->doRequest(
+            $this->getCrudEntityPath($roomId . '/join/' . $rsvpId),
+            'POST',
+            [
+                'bbb_parameters' => $extraBbbParameters
+            ]
+        );
+
+        $this->setGuestlistId($curGuestlistId);
+
+        return $this->extractDataFromLastResponse();
+    }
+
+    /**
      * @return string
      */
     protected function getEntityPrefix(): string

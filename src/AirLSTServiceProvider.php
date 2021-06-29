@@ -12,7 +12,7 @@ use AirLST\CoreSdk\Api\WorkerCreator;
  *
  * @author Michael Thaller <m.thaller@airlst.com>
  */
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
+class AirLSTServiceProvider extends \Illuminate\Support\ServiceProvider
 {
 
     /**

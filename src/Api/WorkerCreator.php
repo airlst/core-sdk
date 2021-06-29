@@ -37,19 +37,21 @@ class WorkerCreator
      */
     public function __call($name, $arguments)
     {
-        if (Arr::has($this->availableWorkers, $name)) {
-            $className = Arr::get($this->availableWorkers, $name);
-
-            /** @var ApiWorker $newInstance */
-            $newInstance = new $className(...$arguments);
-
-            if($token = config('airlst-sdk.api.auth_token')) {
-                $newInstance->setAuthorizationToken($token);
-            }
-
-            return $newInstance;
+        throw_unless(
+            ! Arr::has($this->availableWorkers, $name),
+            WorkerNotFoundException::class,
+            "No worker for key $name was found"
+        );
+    
+        $className = Arr::get($this->availableWorkers, $name);
+    
+        /** @var ApiWorker $newInstance */
+        $newInstance = new $className(...$arguments);
+    
+        if($token = config('airlst-sdk.api.auth_token')) {
+            $newInstance->setAuthorizationToken($token);
         }
-
-        throw new WorkerNotFoundException('No worker for key "' . $name . '" was found');
+    
+        return $newInstance;
     }
 }

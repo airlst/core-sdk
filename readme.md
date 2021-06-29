@@ -1,11 +1,23 @@
 # AirLST Laravel SDK Package
 
+## Installation
+
+```php 
+composer require airlst/core-sdk
+```
+
+## Publish the config
+
+```php
+php artisan vendor:publish --vendor="AirLST\CoreSdk\AirLSTServiceProvider" --tag="config"
+```
+
 ## Usage
 
 ### Example of general retrieve and work of a worker (using guestlists for this example)
 
 ```php
-use AirLST\Core\Facades\AirLSTCoreApi;
+use AirLST\CoreSdk\Facades\AirLSTCoreApi;
 
 $apiWorker = AirLSTCoreApi::guestlist();
 

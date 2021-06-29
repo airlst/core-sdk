@@ -28,7 +28,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "AirLST\\CoreSdk\\ServiceProvider"
+                "AirLST\\CoreSdk\\AirLSTCoreServiceProvider"
             ]
         }
     }
